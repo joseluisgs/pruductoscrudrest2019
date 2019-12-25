@@ -84,4 +84,13 @@ public class ProductosRESTController {
         //devolvemos el nuevo producto
         return ResponseEntity.ok(p);
     }
+
+    // DELETE, borramos un producto dado su id
+    @RequestMapping(value = "productos/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        // Borramos el producto
+        pd.deleteById(id);
+        // Devolvemos la acción
+        return ResponseEntity.ok(null);
+    }
 }
