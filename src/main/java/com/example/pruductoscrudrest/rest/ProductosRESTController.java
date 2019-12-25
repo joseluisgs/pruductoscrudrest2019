@@ -17,11 +17,11 @@ import java.util.Optional;
 public class ProductosRESTController {
 
     /**
-    //@RequestMapping @GetMapping @PostMapping (estos dos últimos no deginen la URL, si no toman la url base
-    //@GetMapping Consume el servicio en la url raiz usando GET localhots:8080/
-    // @RequestMapping(value = "hola", method = RequestMethod.GET) de esta manera indicamos el protocolo y la URL de entrada
-     // localhost:8080/hola
-    */
+     * //@RequestMapping @GetMapping @PostMapping (estos dos últimos no deginen la URL, si no toman la url base
+     * //@GetMapping Consume el servicio en la url raiz usando GET localhots:8080/
+     * // @RequestMapping(value = "hola", method = RequestMethod.GET) de esta manera indicamos el protocolo y la URL de entrada
+     * // localhost:8080/hola
+     */
 
     // Inyección de dependecis para CRUD con ProductosDAO, JDataObject
     // https://www.baeldung.com/spring-dao-jpa
@@ -32,7 +32,7 @@ public class ProductosRESTController {
 
     //@GetMapping
     @RequestMapping(value = "test", method = RequestMethod.GET)
-    public String hola(){
+    public String hola() {
         return "Hola REST 2DAM. Todo OK";
     }
 
@@ -40,6 +40,7 @@ public class ProductosRESTController {
 
     /**
      * Método de prueba con Productos
+     *
      * @return
      */
     /*
@@ -53,7 +54,7 @@ public class ProductosRESTController {
 
     // GET Todos los productos
     @RequestMapping(value = "productos", method = RequestMethod.GET)
-    public ResponseEntity<List<Producto>> findAll(){
+    public ResponseEntity<List<Producto>> findAll() {
         //Producto p = new Producto(1L,"Producto");
         //ArrayList<Producto> l = new ArrayList<Producto>();
         // l.add(p);
@@ -65,20 +66,20 @@ public class ProductosRESTController {
 
     // GET de un producto por id
     @RequestMapping(value = "productos/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Producto> findById(@PathVariable("id") Long id){
+    public ResponseEntity<Producto> findById(@PathVariable("id") Long id) {
         // Buscamos el producto por id
         Optional<Producto> op = pd.findById(id);
         // Devolvemos el producto si existe.
-        if(op.isPresent()){
+        if (op.isPresent()) {
             return ResponseEntity.ok(op.get());
-        }else {
+        } else {
             return ResponseEntity.noContent().build();
         }
     }
 
     // POST, crear un producto
-    @RequestMapping (value = "productos", method = RequestMethod.POST)
-    public ResponseEntity<Producto> create(@RequestBody Producto producto){
+    @RequestMapping(value = "productos", method = RequestMethod.POST)
+    public ResponseEntity<Producto> create(@RequestBody Producto producto) {
         // Creamos un nuevo producto a partir de los datos una vez insertado
         Producto p = pd.save(producto);
         //devolvemos el nuevo producto
@@ -87,10 +88,27 @@ public class ProductosRESTController {
 
     // DELETE, borramos un producto dado su id
     @RequestMapping(value = "productos/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         // Borramos el producto
         pd.deleteById(id);
         // Devolvemos la acción
         return ResponseEntity.ok(null);
+    }
+
+    // UPDATE (PUT) de un producto dado su valor
+    @RequestMapping(value = "productos", method = RequestMethod.PUT)
+    public ResponseEntity<Producto> update(@RequestBody Producto producto) {
+        // Buscamos el producto por id
+        Optional<Producto> op = pd.findById(producto.getId());
+        // Devolvemos el producto si existe.
+        if (op.isPresent()) {
+            // Le pasamos los datos
+            Producto p = op.get();
+            p.setNombre(producto.getNombre());
+            pd.save(p);
+            return ResponseEntity.ok(p);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }
