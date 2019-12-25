@@ -1,4 +1,4 @@
-package com.example.pruductoscrudrest.rest;
+package com.example.pruductoscrudrest.controller;
 
 import com.example.pruductoscrudrest.dao.ProductosDAO;
 import com.example.pruductoscrudrest.model.Producto;
@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +15,13 @@ import java.util.Optional;
 public class ProductosRESTController {
 
     /**
-     * //@RequestMapping @GetMapping @PostMapping (estos dos últimos no deginen la URL, si no toman la url base
+     * //@RequestMapping @GetMapping @PostMapping, etc (estos dos últimos no redirigen la URL, si no toman la url base
      * //@GetMapping Consume el servicio en la url raiz usando GET localhots:8080/
      * // @RequestMapping(value = "hola", method = RequestMethod.GET) de esta manera indicamos el protocolo y la URL de entrada
      * // localhost:8080/hola
      */
 
-    // Inyección de dependecis para CRUD con ProductosDAO, JDataObject
+    // Inyección de dependecias para CRUD con ProductosDAO, JDataObject
     // https://www.baeldung.com/spring-dao-jpa
     @Autowired
     private ProductosDAO pd;
@@ -52,7 +50,11 @@ public class ProductosRESTController {
     }
     */
 
-    // GET Todos los productos
+    /**
+     * Lista todos lso productos. Protocolo GET
+     *
+     * @return Lista de productos
+     */
     @RequestMapping(value = "productos", method = RequestMethod.GET)
     public ResponseEntity<List<Producto>> findAll() {
         //Producto p = new Producto(1L,"Producto");
@@ -64,7 +66,12 @@ public class ProductosRESTController {
         return ResponseEntity.ok(l);
     }
 
-    // GET de un producto por id
+    /**
+     * Devuelve un producto dado su ID protocolo GET
+     *
+     * @param id ID del producto
+     * @return Producto
+     */
     @RequestMapping(value = "productos/{id}", method = RequestMethod.GET)
     public ResponseEntity<Producto> findById(@PathVariable("id") Long id) {
         // Buscamos el producto por id
@@ -77,7 +84,12 @@ public class ProductosRESTController {
         }
     }
 
-    // POST, crear un producto
+    /**
+     * Crea un nuevo producto. Protocolo POST
+     *
+     * @param producto Producto a crear mendiante JSON
+     * @return Producto creado si lo consigue
+     */
     @RequestMapping(value = "productos", method = RequestMethod.POST)
     public ResponseEntity<Producto> create(@RequestBody Producto producto) {
         // Creamos un nuevo producto a partir de los datos una vez insertado
@@ -86,7 +98,12 @@ public class ProductosRESTController {
         return ResponseEntity.ok(p);
     }
 
-    // DELETE, borramos un producto dado su id
+    /**
+     * Borra un producto de la base de datos. Protocolo DELETE
+     *
+     * @param id, id del producto a eliminar
+     * @return
+     */
     @RequestMapping(value = "productos/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         // Borramos el producto
@@ -95,7 +112,12 @@ public class ProductosRESTController {
         return ResponseEntity.ok(null);
     }
 
-    // UPDATE (PUT) de un producto dado su valor
+    /**
+     * Actualiza un producto de la base de datos. Protocolo PUT
+     *
+     * @param producto producto a actualizar
+     * @return Producto actualizado
+     */
     @RequestMapping(value = "productos", method = RequestMethod.PUT)
     public ResponseEntity<Producto> update(@RequestBody Producto producto) {
         // Buscamos el producto por id

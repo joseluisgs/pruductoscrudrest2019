@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * JDataObject
  * https://www.baeldung.com/spring-dao-jpa
  */
-public interface ProductosDAO extends JpaRepository<Producto,Long> {
+public interface ProductosDAO extends JpaRepository<Producto, Long> {
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 // Le decimos a Spring que es una Entidad y la tabla.
 @Entity
-@Table(name="productos")
+@Table(name = "productos")
 public class Producto {
 
     // Indicamos los campos
