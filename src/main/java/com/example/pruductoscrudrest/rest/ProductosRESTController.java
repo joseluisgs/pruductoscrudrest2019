@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController         // Definimos la clase como controlador REST
@@ -58,7 +59,20 @@ public class ProductosRESTController {
         // l.add(p);
         // Nos conectamos y realizamos el select
         List<Producto> l = pd.findAll();
-        // Devolvemos le producto
+        // Devolvemos la ista de productos
         return ResponseEntity.ok(l);
+    }
+
+    // GET de un producto por id
+    @RequestMapping(value = "productos/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Producto> findProduct(@PathVariable("id") Long id){
+        // Buscamos el producto por id
+        Optional<Producto> op = pd.findById(id);
+        // Devolvemos el producto si existe.
+        if(op.isPresent()){
+            return ResponseEntity.ok(op.get());
+        }else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }
