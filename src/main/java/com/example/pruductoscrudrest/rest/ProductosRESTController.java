@@ -15,7 +15,7 @@ public class ProductosRESTController {
     */
 
     //@GetMapping
-    //@RequestMapping(value = "hola", method = RequestMethod.GET)
+    @RequestMapping(value = "hola", method = RequestMethod.GET)
     public String hola(){
         return "Hola REST 2DAM";
     }
