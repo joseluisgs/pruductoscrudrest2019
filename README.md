@@ -1,4 +1,4 @@
 # pruductoscrudrest2019
 2DAM PMYDM 2019-2020. Ejmplo API REST en Spring Boot
 
-API RESTfull usando Sping Boot donde se implementa un CRUD completo sobre productos
+API RESTfull usando Spring Boot donde se implementa un CRUD completo sobre productos
