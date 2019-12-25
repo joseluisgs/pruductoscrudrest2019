@@ -1,6 +1,12 @@
 package com.example.pruductoscrudrest.rest;
 
+import com.example.pruductoscrudrest.model.Producto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController         // Definimos la clase como controlador REST
@@ -15,8 +21,33 @@ public class ProductosRESTController {
     */
 
     //@GetMapping
-    @RequestMapping(value = "hola", method = RequestMethod.GET)
+    @RequestMapping(value = "test", method = RequestMethod.GET)
     public String hola(){
-        return "Hola REST 2DAM";
+        return "Hola REST 2DAM. Todo OK";
+    }
+
+    //*** Comenzado los servicios rest
+
+    /**
+     * Método de prueba con Productos
+     * @return
+     */
+    /*
+    @RequestMapping(value = "productos", method = RequestMethod.GET)
+    public ResponseEntity<Producto> getProducto(){
+        Producto p = new Producto(1L,"Producto");
+        // Devolvemos le producto
+        return ResponseEntity.ok(p);
+    }
+    */
+
+    // GET Todos los productos
+    @RequestMapping(value = "productos", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Producto>> getProducto(){
+        Producto p = new Producto(1L,"Producto");
+        ArrayList<Producto> l = new ArrayList<Producto>();
+        l.add(p);
+        // Devolvemos le producto
+        return ResponseEntity.ok(l);
     }
 }
