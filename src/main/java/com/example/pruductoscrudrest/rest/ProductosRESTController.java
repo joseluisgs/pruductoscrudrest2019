@@ -65,7 +65,7 @@ public class ProductosRESTController {
 
     // GET de un producto por id
     @RequestMapping(value = "productos/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Producto> findProduct(@PathVariable("id") Long id){
+    public ResponseEntity<Producto> findById(@PathVariable("id") Long id){
         // Buscamos el producto por id
         Optional<Producto> op = pd.findById(id);
         // Devolvemos el producto si existe.
@@ -74,5 +74,14 @@ public class ProductosRESTController {
         }else {
             return ResponseEntity.noContent().build();
         }
+    }
+
+    // POST, crear un producto
+    @RequestMapping (value = "productos", method = RequestMethod.POST)
+    public ResponseEntity<Producto> create(@RequestBody Producto producto){
+        // Creamos un nuevo producto a partir de los datos una vez insertado
+        Producto p = pd.save(producto);
+        //devolvemos el nuevo producto
+        return ResponseEntity.ok(p);
     }
 }
