@@ -1,6 +1,8 @@
 package com.example.pruductoscrudrest.rest;
 
+import com.example.pruductoscrudrest.dao.ProductosDAO;
 import com.example.pruductoscrudrest.model.Producto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,13 @@ public class ProductosRESTController {
     // @RequestMapping(value = "hola", method = RequestMethod.GET) de esta manera indicamos el protocolo y la URL de entrada
      // localhost:8080/hola
     */
+
+    // Inyección de dependecis para CRUD con ProductosDAO, JDataObject
+    // https://www.baeldung.com/spring-dao-jpa
+    @Autowired
+    private ProductosDAO pd;
+
+    // Función de TEST
 
     //@GetMapping
     @RequestMapping(value = "test", method = RequestMethod.GET)
@@ -43,10 +52,12 @@ public class ProductosRESTController {
 
     // GET Todos los productos
     @RequestMapping(value = "productos", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Producto>> getProducto(){
-        Producto p = new Producto(1L,"Producto");
-        ArrayList<Producto> l = new ArrayList<Producto>();
-        l.add(p);
+    public ResponseEntity<List<Producto>> findAll(){
+        //Producto p = new Producto(1L,"Producto");
+        //ArrayList<Producto> l = new ArrayList<Producto>();
+        // l.add(p);
+        // Nos conectamos y realizamos el select
+        List<Producto> l = pd.findAll();
         // Devolvemos le producto
         return ResponseEntity.ok(l);
     }
