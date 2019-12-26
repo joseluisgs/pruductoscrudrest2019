@@ -51,7 +51,8 @@ public class ProductosRESTController {
     */
 
     /**
-     * Lista todos lso productos. Protocolo GET
+     * Lista todos los productos. Protocolo GET
+     * GET: http://localhost:8080/productos
      *
      * @return Lista de productos
      */
@@ -68,6 +69,7 @@ public class ProductosRESTController {
 
     /**
      * Devuelve un producto dado su ID protocolo GET
+     * GET: http://localhost:8080/productos/{id}
      *
      * @param id ID del producto
      * @return Producto
@@ -86,7 +88,7 @@ public class ProductosRESTController {
 
     /**
      * Crea un nuevo producto. Protocolo POST
-     *
+     * POST: http://localhost:8080/productos
      * @param producto Producto a crear mendiante JSON
      * @return Producto creado si lo consigue
      */
@@ -100,28 +102,37 @@ public class ProductosRESTController {
 
     /**
      * Borra un producto de la base de datos. Protocolo DELETE
+     * DELETE: http://localhost:8080/productos/{id}
      *
      * @param id, id del producto a eliminar
      * @return
      */
     @RequestMapping(value = "productos/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        // Borramos el producto
-        pd.deleteById(id);
-        // Devolvemos la acción
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Producto> delete(@PathVariable("id") Long id) {
+        // Buscamos el producto por id
+        Optional<Producto> op = pd.findById(id);
+        // si existe lo borramos y devolvemos
+        if (op.isPresent()) {
+            // Le pasamos los datos
+            Producto p = op.get();
+            pd.deleteById(id);
+            return ResponseEntity.ok(p);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
     /**
      * Actualiza un producto de la base de datos. Protocolo PUT
+     * PUT: http://localhost:8080/productos/{id}
      *
      * @param producto producto a actualizar
      * @return Producto actualizado
      */
-    @RequestMapping(value = "productos", method = RequestMethod.PUT)
-    public ResponseEntity<Producto> update(@RequestBody Producto producto) {
+    @RequestMapping(value = "productos/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Producto> update(@PathVariable("id") Long id, @RequestBody Producto producto) {
         // Buscamos el producto por id
-        Optional<Producto> op = pd.findById(producto.getId());
+        Optional<Producto> op = pd.findById(id);
         // Devolvemos el producto si existe.
         if (op.isPresent()) {
             // Le pasamos los datos
