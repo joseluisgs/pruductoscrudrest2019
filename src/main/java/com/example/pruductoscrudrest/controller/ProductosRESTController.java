@@ -41,14 +41,14 @@ public class ProductosRESTController {
      *
      * @return
      */
-    /*
-    @RequestMapping(value = "productos", method = RequestMethod.GET)
+
+    @RequestMapping(value = "testproductos", method = RequestMethod.GET)
     public ResponseEntity<Producto> getProducto(){
         Producto p = new Producto(1L,"Producto");
         // Devolvemos le producto
         return ResponseEntity.ok(p);
     }
-    */
+
 
     /**
      * Lista todos los productos. Protocolo GET
